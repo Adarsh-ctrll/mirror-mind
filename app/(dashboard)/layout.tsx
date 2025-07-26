@@ -9,7 +9,7 @@ import Header from "../components/layout/Header";
 import MagicalBackground from "../components/ui/MagicalBackground";
 import { MoodProvider, useMood } from "../context/MoodContext";
 
-// Inner component to access mood context
+
 function DashboardUI({ children }) {
     const { mood } = useMood();
     const [user] = useAuthState(auth);
@@ -30,7 +30,7 @@ function DashboardUI({ children }) {
     );
 }
 
-// Main layout component
+
 export default function DashboardLayout({
   children,
 }: {

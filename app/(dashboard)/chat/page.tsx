@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '@/app/components/common/Button';
 import { Send, Sparkles } from 'lucide-react';
-import Loader from "@/app/components/common/Loader"; // or wherever your Loader component is
+import Loader from "@/app/components/common/Loader"; 
 
 
 interface Message {
@@ -23,7 +23,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
-  // Greet the user on initial load
+
   useEffect(() => {
     async function startConversation() {
       setLoading(true);
@@ -61,7 +61,7 @@ export default function ChatPage() {
       setMessages(prev => [...prev, { role: 'model', parts: reply }]);
     } catch (error) {
       toast.error(String(error));
-      setMessages(messages); // Revert on error
+      setMessages(messages); 
     } finally {
       setLoading(false);
     }
@@ -73,12 +73,12 @@ export default function ChatPage() {
 
 return (
     <div className="flex flex-col h-full max-w-3xl mx-auto">
-        {/* THIS IS THE CORRECTED STRUCTURE */}
+       
         <div className="flex-1 overflow-y-auto pr-4 space-y-6">
             <AnimatePresence>
                 {messages.map((msg, index) => (
                     <motion.div
-                        // A more stable key is better than just the index
+
                         key={`${index}-${msg.role}`} 
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -92,7 +92,7 @@ return (
                 ))}
             </AnimatePresence>
             
-            {/* These are now outside AnimatePresence and won't cause key warnings */}
+p
             {loading && <div className="flex justify-center py-4"><Loader /></div>}
             <div ref={messagesEndRef} />
         </div>

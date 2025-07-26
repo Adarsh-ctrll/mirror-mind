@@ -14,15 +14,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // --- THIS IS THE CRITICAL CHANGE ---
-    // Get the model and configure it to respond in JSON format.
+
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash-latest",
       generationConfig: {
-        responseMimeType: "application/json", // This forces JSON-only output
+        responseMimeType: "application/json", 
       },
     });
-    // --- END OF THE CRITICAL CHANGE ---
+
 
     const prompt = `
       You are "The Mirror," a wise, empathetic, and slightly magical journaling assistant.
@@ -38,13 +37,13 @@ export async function POST(req: NextRequest) {
     const response = await result.response;
     const text = await response.text();
 
-    // No more cleaning needed! The text is now guaranteed to be a valid JSON string.
+
     const parsedResponse = JSON.parse(text);
 
     return NextResponse.json(parsedResponse);
 
   } catch (error) {
-    // This log is still vital if anything goes wrong.
+
     console.error("Gemini API Error:", error); 
     return NextResponse.json(
       { error: "The Mirror is cloudy right now. Please try again later." },

@@ -16,7 +16,7 @@ export default function DashboardPage() {
     const [loading, setLoading] = useState(true);
     const [userHouse, setUserHouse] = useState<HogwartsHouse>('Unsorted');
 
-    // Fetches the user's assigned house from Firestore.
+
     useEffect(() => {
         if(user) {
             const userDocRef = doc(db, 'users', user.uid);
@@ -29,7 +29,7 @@ export default function DashboardPage() {
         }
     }, [user]);
 
-    // Fetches all journal entries and performs the house sorting ceremony if needed.
+
     useEffect(() => {
         if (user) {
             const q = query(collection(db, 'journalEntries'), where('uid', '==', user.uid), orderBy('createdAt', 'desc'));
@@ -37,7 +37,7 @@ export default function DashboardPage() {
                 const fetchedEntries = snapshot.docs.map(doc => doc.data());
                 setEntries(fetchedEntries);
 
-                // Sort the user into a house after 5 entries.
+
                 if (fetchedEntries.length >= 5 && userHouse === 'Unsorted') {
                     const moodCounts = fetchedEntries.reduce((acc, entry) => {
                         acc[entry.mood] = (acc[entry.mood] || 0) + 1;
@@ -59,7 +59,6 @@ export default function DashboardPage() {
         }
     }, [user, userHouse]);
 
-    // Calculates user stats.
     const stats = useMemo(() => {
         if (entries.length === 0) return { total: 0, dominantMood: 'N/A' };
         const moodCounts = entries.reduce((acc, entry) => {
@@ -87,7 +86,7 @@ export default function DashboardPage() {
     );
 }
 
-// Reusable Stat Card Component
+
 const StatCard = ({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value: string | number }) => (
     <motion.div whileHover={{ y: -5 }} className="bg-black/40 p-6 rounded-lg border border-yellow-700/20">
         <Icon className="mx-auto h-10 w-10 text-yellow-500 mb-2" />
@@ -96,7 +95,7 @@ const StatCard = ({ icon: Icon, label, value }: { icon: React.ElementType, label
     </motion.div>
 );
 
-// House Card Component
+
 const HouseCard = ({ house, colors }: { house: HogwartsHouse, colors: any }) => (
      <motion.div whileHover={{ y: -5, boxShadow: `0px 0px 15px ${colors.secondary}` }} className="p-6 rounded-lg border" style={{ backgroundColor: colors.primary, borderColor: colors.secondary, color: colors.text }}>
          <Trophy className="mx-auto h-10 w-10 mb-2"/>

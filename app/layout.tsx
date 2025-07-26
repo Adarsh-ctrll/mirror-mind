@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Your Magical Mental Companion",
   
   icons: {
-    icon: "/favicon.ico", // ✅ This line points to public/favicon.ico
+    icon: "/favicon.ico", 
   },
 };
 

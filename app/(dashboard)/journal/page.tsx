@@ -19,7 +19,7 @@ export default function JournalPage() {
   const [apiLoading, setApiLoading] = useState(false);
   const [historyLoading, setHistoryLoading] = useState(true); // Start as true
 
-  // THIS IS THE CRITICAL CHANGE FOR DATA FETCHING
+
   useEffect(() => {
     // Do not proceed if the user is still loading from auth.
     if (authLoading) {
@@ -41,18 +41,18 @@ export default function JournalPage() {
       orderBy('createdAt', 'desc')
     );
 
-    // onSnapshot returns an unsubscribe function.
+ 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const entries = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
-        // Ensure date is handled safely
+
         date: doc.data().createdAt?.toDate().toLocaleDateString() ?? 'Just now',
       }));
       setPastEntries(entries);
-      setHistoryLoading(false); // We have the data, stop loading.
+      setHistoryLoading(false); 
     }, (error) => {
-      // This is where your "could not fetch" error comes from.
+
       console.error("Firestore Error:", error);
       toast.error("Could not fetch past entries. Check security rules and indexes.");
       setHistoryLoading(false);

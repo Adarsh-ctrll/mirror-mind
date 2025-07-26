@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Button from "@/app/components/common/Button"; // Correct path
-import Input from "@/app/components/common/Input";   // Correct path
+import Button from "@/app/components/common/Button"; 
+import Input from "@/app/components/common/Input";   
 import Link from "next/link";
 
 interface AuthFormProps {
@@ -21,7 +21,7 @@ export default function AuthForm({ isLogin, onSubmit }: AuthFormProps) {
       return;
     }
     setLoading(true);
-    // This line causes the error if onSubmit is not provided
+
     await onSubmit(email, password); 
     setLoading(false);
   };
