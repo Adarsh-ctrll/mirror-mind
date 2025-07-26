@@ -13,7 +13,8 @@ Welcome to MirrorMind, a Harry Potter–themed AI-powered journaling assistant.
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/Adarsh-ctrll/mirror-mind.git
+
     cd mirror-mind
     ```
 
