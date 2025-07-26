@@ -71,27 +71,32 @@ export default function ChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  return (
+return (
     <div className="flex flex-col h-full max-w-3xl mx-auto">
+        {/* THIS IS THE CORRECTED STRUCTURE */}
         <div className="flex-1 overflow-y-auto pr-4 space-y-6">
             <AnimatePresence>
                 {messages.map((msg, index) => (
                     <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}
+                        // A more stable key is better than just the index
+                        key={`${index}-${msg.role}`} 
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}
                     >
-                    {msg.role === 'model' && <Sparkles className="h-6 w-6 text-yellow-400 mt-1 flex-shrink-0" />}
-                    <div className={`max-w-md lg:max-w-lg p-4 rounded-2xl shadow-lg ${msg.role === 'user' ? 'bg-gryffindor text-white rounded-br-none' : 'bg-parchment/10 text-parchment-light rounded-bl-none'}`}>
-                        <p className="font-serif whitespace-pre-wrap text-base">{msg.parts}</p>
-                    </div>
+                        {msg.role === 'model' && <Sparkles className="h-6 w-6 text-yellow-400 mt-1 flex-shrink-0" />}
+                        <div className={`max-w-md lg:max-w-lg p-4 rounded-2xl shadow-lg ${msg.role === 'user' ? 'bg-gryffindor text-white rounded-br-none' : 'bg-parchment/10 text-parchment-light rounded-bl-none'}`}>
+                            <p className="font-serif whitespace-pre-wrap text-base">{msg.parts}</p>
+                        </div>
                     </motion.div>
                 ))}
-                {loading && <Loader />}
-                <div ref={messagesEndRef} />
             </AnimatePresence>
+            
+            {/* These are now outside AnimatePresence and won't cause key warnings */}
+            {loading && <div className="flex justify-center py-4"><Loader /></div>}
+            <div ref={messagesEndRef} />
         </div>
+        
         <form onSubmit={handleSendMessage} className="mt-4 flex items-center gap-2">
             <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask The Mirror..." className="flex-1 bg-parchment/10 border border-yellow-700/20 rounded-full py-3 px-5 text-parchment focus:outline-none focus:ring-2 focus:ring-yellow-600"/>
             <Button type="submit" disabled={loading} className="rounded-full !p-3 aspect-square">
@@ -99,6 +104,6 @@ export default function ChatPage() {
             </Button>
         </form>
     </div>
-  );
+);
 }
 
